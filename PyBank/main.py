@@ -4,3 +4,18 @@
     #average of changes in "profit/losses"
     #greatest increase in profits (date & amount)
     #greatest decrease in losses (date & amount)
+
+import os
+import csv 
+
+csvpath = os.path.join('Resources','budget_data.csv')
+
+with open(csvpath) as csvfile:
+    csvreader = csv.reader(csvfile, delimiter=',')
+
+    csv_header=next(csvreader)
+    print(f"CSV Header:{csv_header}")
+    
+
+    Months = sum(1 for row in csvreader)
+    print(Months)
