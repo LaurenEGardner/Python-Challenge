@@ -1,32 +1,38 @@
-#Create script that calculates: 
-    #Total number of votes
-    #complete list of candidates who received votes
-    #percentage of votes each candidate won
-    #winner of the election
 import os
 import csv
 
-csvpath = os.path.join('Resources', 'election_data.csv')
+#import csv file
+election_data = os.path.join("Resources", "election_data.csv")
 
-with open(csvpath) as csvfile:
-    csvreader = csv.reader(csvfile, delimiter=',')
-    ##print(csvreader)
+#declare variables
+vote_count=[]
+Totalvotes = 0
+candidates = {}
 
-    csv_header=next(csvreader)
-    print(f"CSV Header:{csv_header}")
-    
+with open (election_data) as csvfile:
+    csvreader = csv.reader(csvfile, delimiter = ",")
+
+    csv_header = next(csvreader)
 
     Totalvotes = sum(1 for row in csvreader)
-    print(Totalvotes)
+    Winning_candidate = ""
+    Highest_votes = 0
 
-    candidates = {}
     for row in csvreader:
-        if row[2] not in candidates:
-            candidates.update({row[2] : 1})
-        else:
+        total_votes += 1
+
+        if candidates.get(row[2]):
             candidates[row[2]] += 1
+        else:
+            candidates[row[2]] = 1
 
-    print(candidates)
+for candidate_name, candidate_votes in candidates.items():
+    print(candidate_name, candidate_votes)
+    print(candidate_name, (candidate_votes/float(Totalvotes))*100)
 
-    #print(len(new))
-    #print(candidates)     
+    if candidate_votes > Highest_votes:
+        Winning_candidate = candidate_name
+        Highest_votes = candidate_votes
+print(Winning_candidate)
+#print(candidates)
+        
